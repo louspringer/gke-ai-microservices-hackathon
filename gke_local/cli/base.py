@@ -236,5 +236,11 @@ def validate(config_dir: Optional[Path], environment: str, verbose: bool):
         sys.exit(1)
 
 
+# Import cluster commands to register them
+try:
+    from . import cluster_commands
+except ImportError:
+    pass
+
 if __name__ == '__main__':
     cli()
