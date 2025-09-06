@@ -1,0 +1,37 @@
+{
+  "name": "purple-development-theme",
+  "displayName": "Purple Development Theme",
+  "description": "A comprehensive purple color theme for VS Code with dark purple backgrounds",
+  "version": "1.0.0",
+  "publisher": "purple-theme-dev",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "keywords": [
+    "purple",
+    "dark",
+    "theme",
+    "color-theme"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Purple Development Theme",
+        "uiTheme": "vs-dark",
+        "path": "./themes/purple-theme.json"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/purple-development-theme"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/purple-development-theme/issues"
+  },
+  "homepage": "https://github.com/your-username/purple-development-theme#readme",
+  "license": "MIT"
+}

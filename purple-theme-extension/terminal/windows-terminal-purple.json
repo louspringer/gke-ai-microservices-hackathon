@@ -1,0 +1,23 @@
+{
+  "name": "Purple Theme",
+  "background": "#1A0D26",
+  "foreground": "#E6E6FA",
+  "selectionBackground": "#3D2A4F",
+  "cursorColor": "#9370DB",
+  "black": "#1A0D26",
+  "red": "#8B3A62",
+  "green": "#9370DB",
+  "yellow": "#DDA0DD",
+  "blue": "#9370DB",
+  "purple": "#9370DB",
+  "cyan": "#BA55D3",
+  "white": "#E6E6FA",
+  "brightBlack": "#2D1B3D",
+  "brightRed": "#ED94C0",
+  "brightGreen": "#BA55D3",
+  "brightYellow": "#DDA0DD",
+  "brightBlue": "#BA55D3",
+  "brightPurple": "#ED94C0",
+  "brightCyan": "#E6E6FA",
+  "brightWhite": "#E6E6FA"
+}
