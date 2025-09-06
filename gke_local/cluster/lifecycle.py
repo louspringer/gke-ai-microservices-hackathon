@@ -5,6 +5,7 @@ from typing import Dict, List, Optional, Callable, Any
 from dataclasses import dataclass
 from enum import Enum
 from .kind_manager import KindManager, ClusterStatus
+from .registry import LocalRegistryManager, RegistryIntegration
 from ..config.models import GKELocalConfig
 from ..utils.logging import get_logger
 
@@ -42,6 +43,8 @@ class ClusterLifecycleManager:
         """
         self.config = config
         self.kind_manager = KindManager(config)
+        self.registry_manager = LocalRegistryManager(config)
+        self.registry_integration = RegistryIntegration(self.registry_manager)
         self.cluster_name = config.cluster.name
         self._state = ClusterState.NOT_EXISTS
         self._event_handlers: Dict[str, List[Callable]] = {}
@@ -86,6 +89,9 @@ class ClusterLifecycleManager:
             self._state = ClusterState.CREATING
             await self._emit_event("cluster_creating", {})
             
+            # Start registry if not running
+            await self._ensure_registry_running()
+            
             # Create cluster
             success = await self.kind_manager.create_cluster()
             
@@ -94,6 +100,9 @@ class ClusterLifecycleManager:
                 await self._wait_for_ready()
                 
                 if self._state == ClusterState.READY:
+                    # Connect registry to cluster
+                    await self._connect_registry_to_cluster()
+                    
                     await self._emit_event("cluster_ready", {})
                     await self.start_monitoring()
                     return True
@@ -321,6 +330,34 @@ class ClusterLifecycleManager:
             
         except Exception as e:
             logger.error(f"Error checking cluster health: {e}")
+    
+    async def _ensure_registry_running(self) -> None:
+        """Ensure the local registry is running."""
+        try:
+            registry_status = await self.registry_manager.get_registry_status()
+            
+            if not registry_status.is_accessible:
+                logger.info("Starting local registry for cluster")
+                await self.registry_manager.start_registry()
+            else:
+                logger.info("Local registry is already running")
+                
+        except Exception as e:
+            logger.warning(f"Could not ensure registry is running: {e}")
+    
+    async def _connect_registry_to_cluster(self) -> None:
+        """Connect the local registry to the cluster."""
+        try:
+            logger.info("Connecting registry to cluster")
+            success = await self.registry_integration.setup_cluster_registry_connection(self.cluster_name)
+            
+            if success:
+                logger.info("Successfully connected registry to cluster")
+            else:
+                logger.warning("Failed to connect registry to cluster")
+                
+        except Exception as e:
+            logger.warning(f"Error connecting registry to cluster: {e}")
     
     async def _emit_event(self, event_type: str, data: Dict[str, Any]) -> None:
         """Emit a cluster event to registered handlers.

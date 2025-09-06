@@ -236,9 +236,10 @@ def validate(config_dir: Optional[Path], environment: str, verbose: bool):
         sys.exit(1)
 
 
-# Import cluster commands to register them
+# Import commands to register them
 try:
     from . import cluster_commands
+    from . import registry_commands
 except ImportError:
     pass
 
