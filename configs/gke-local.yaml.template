@@ -1,0 +1,80 @@
+# GKE Local Development Environment Configuration
+# This is a template configuration file. Copy to gke-local.yaml and customize.
+
+# Project settings
+project_name: "my-gke-local-project"
+environment: "local"
+log_level: "info"
+
+# Local Kubernetes cluster configuration
+cluster:
+  name: "local-gke-dev"
+  kubernetes_version: "1.28"
+  nodes: 3
+  registry_port: 5000
+  ingress_port: 80
+  api_server_port: 6443
+
+# Simulation layer configuration
+simulation:
+  # Cloud Run simulation settings
+  cloud_run:
+    enabled: true
+    scale_to_zero: true
+    cold_start_delay: "2s"
+    max_instances: 100
+    concurrency: 80
+    timeout: "300s"
+  
+  # GKE Autopilot simulation settings
+  autopilot:
+    enabled: true
+    node_auto_provisioning: true
+    resource_optimization: true
+    security_policies: true
+    intelligent_scheduling: true
+
+# Development services configuration
+services:
+  # Monitoring stack
+  monitoring:
+    prometheus: true
+    grafana: true
+    jaeger: true
+    prometheus_port: 9090
+    grafana_port: 3000
+    jaeger_port: 16686
+  
+  # AI services
+  ai:
+    model_serving: true
+    ghostbusters: true
+    gpu_support: false
+    inference_timeout: 30
+  
+  # Development tools
+  hot_reload: true
+  debug_proxy: true
+  log_aggregation: true
+
+# Environment variables (will be injected into services)
+environment_vars:
+  NODE_ENV: "development"
+  LOG_LEVEL: "debug"
+  
+# Secrets (will be mounted as Kubernetes secrets)
+secrets: {}
+
+# File watching configuration for hot reload
+watch_paths:
+  - "./src"
+  - "./services"
+
+# Patterns to ignore during file watching
+ignore_patterns:
+  - "*.pyc"
+  - "__pycache__"
+  - ".git"
+  - "node_modules"
+  - ".venv"
+  - "*.log"
