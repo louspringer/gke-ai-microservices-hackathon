@@ -26,11 +26,17 @@ This repository has been **seeded with Beast Mode DNA** for systematic GKE Autop
 
 ```bash
 # Deploy with systematic excellence
-./scripts/deploy-autopilot.sh your-project-id
+./deployment/autopilot/deploy.sh YOUR_PROJECT_ID
+
+# Validate systematic deployment
+./scripts/validate-deployment.sh
+
+# Monitor costs systematically
+./scripts/cost-monitor.sh
 
 # Monitor with systematic observability
-kubectl get pods
-kubectl logs -l app=your-app
+kubectl get pods,services,hpa -n hackathon-app
+kubectl logs -f deployment/systematic-app -n hackathon-app
 ```
 
 ### 🎯 Systematic Architecture
@@ -53,9 +59,12 @@ This project follows **Beast Mode systematic principles**:
 ### 🧬 Beast Mode DNA Components
 
 - **Spore**: `.kiro/BEAST_MODE_DNA.md` - Complete systematic DNA
-- **Steering**: `.kiro/steering/` - Systematic principles and guidelines
-- **Framework**: `scripts/` - Systematic deployment and management tools
-- **Architecture**: Systematic project structure and best practices
+- **Steering**: `.kiro/steering/gke-autopilot-systematic.md` - GKE Autopilot principles
+- **Deployment**: `deployment/autopilot/` - Systematic GKE Autopilot framework
+- **Validation**: `scripts/validate-deployment.sh` - Systematic testing
+- **Monitoring**: `scripts/cost-monitor.sh` - Systematic cost optimization
+- **Examples**: `examples/sample-app/` - Production-ready sample application
+- **Documentation**: `docs/HACKATHON_QUICKSTART.md` - Hackathon optimization guide
 
 ---
 

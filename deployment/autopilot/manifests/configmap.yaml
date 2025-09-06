@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: beast-mode-config
+  namespace: hackathon-app
+  labels:
+    app: systematic-app
+    beast-mode: "systematic-excellence"
+data:
+  # Application configuration
+  APP_NAME: "Beast Mode Systematic App"
+  APP_VERSION: "2.0"
+  ENVIRONMENT: "hackathon"
+  
+  # Beast Mode DNA configuration
+  SYSTEMATIC_EXCELLENCE: "true"
+  PDCA_ENABLED: "true"
+  LIVE_FIRE_VALIDATED: "true"
+  
+  # GKE Autopilot optimization
+  AUTOPILOT_OPTIMIZED: "true"
+  SERVERLESS_KUBERNETES: "true"
+  
+  # Hackathon features
+  DEMO_MODE: "true"
+  JUDGE_FRIENDLY: "true"
+  AUTO_SCALING_DEMO: "true"
+  
+  # Monitoring configuration
+  HEALTH_CHECK_ENABLED: "true"
+  METRICS_ENABLED: "true"
+  COST_MONITORING: "true"
+  
+  # Security configuration
+  SECURITY_FIRST: "true"
+  NON_ROOT_CONTAINER: "true"
+  NETWORK_POLICIES: "enabled"
