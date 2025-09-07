@@ -1,16 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: systematic-app-service
+  name: ai-microservice
   namespace: hackathon-app
   labels:
-    app: systematic-app
-    beast-mode: "systematic-excellence"
+    app: ai-microservice
+    component: backend
+    hackathon: gke-turns-10
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   type: LoadBalancer
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 8080
     protocol: TCP
+    name: http
   selector:
-    app: systematic-app
+    app: ai-microservice

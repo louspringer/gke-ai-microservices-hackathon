@@ -1,53 +1,62 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: systematic-app
+  name: ai-microservice
   namespace: hackathon-app
   labels:
-    app: systematic-app
-    beast-mode: "systematic-excellence"
+    app: ai-microservice
+    component: backend
+    hackathon: gke-turns-10
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
-      app: systematic-app
+      app: ai-microservice
   template:
     metadata:
       labels:
-        app: systematic-app
-        beast-mode: "systematic-excellence"
+        app: ai-microservice
+        component: backend
+        hackathon: gke-turns-10
     spec:
       containers:
-      - name: app
-        image: nginx:latest
+      - name: ai-service
+        image: gcr.io/PROJECT_ID/gke-autopilot-ai:latest
         ports:
-        - containerPort: 80
-        envFrom:
-        - configMapRef:
-            name: beast-mode-config
+        - containerPort: 8080
+          name: http
+        env:
+        - name: PORT
+          value: "8080"
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
         resources:
           requests:
-            memory: "64Mi"
+            memory: "256Mi"
             cpu: "250m"
           limits:
-            memory: "128Mi"
+            memory: "512Mi"
             cpu: "500m"
         livenessProbe:
           httpGet:
-            path: /
-            port: 80
+            path: /health
+            port: 8080
           initialDelaySeconds: 30
           periodSeconds: 10
+          timeoutSeconds: 5
         readinessProbe:
           httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 5
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
           periodSeconds: 5
+          timeoutSeconds: 3
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
-          runAsUser: 101
+          runAsUser: 1000
           capabilities:
             drop:
             - ALL
